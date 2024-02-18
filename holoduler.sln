@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34601.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "holoduler.Server", "holoduler.Server\holoduler.Server.csproj", "{ACC196A8-566A-48D7-BFDB-5E314410A7CA}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "holoduler.client", "holoduler.client\holoduler.client.esproj", "{836A2DBB-5D40-42FC-8145-57DA0BAD92D8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ACC196A8-566A-48D7-BFDB-5E314410A7CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACC196A8-566A-48D7-BFDB-5E314410A7CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACC196A8-566A-48D7-BFDB-5E314410A7CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACC196A8-566A-48D7-BFDB-5E314410A7CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{836A2DBB-5D40-42FC-8145-57DA0BAD92D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{836A2DBB-5D40-42FC-8145-57DA0BAD92D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{836A2DBB-5D40-42FC-8145-57DA0BAD92D8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{836A2DBB-5D40-42FC-8145-57DA0BAD92D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{836A2DBB-5D40-42FC-8145-57DA0BAD92D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{836A2DBB-5D40-42FC-8145-57DA0BAD92D8}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {60ACD2AC-EC69-4039-91D7-A21EABB0F942}
+	EndGlobalSection
+EndGlobal
