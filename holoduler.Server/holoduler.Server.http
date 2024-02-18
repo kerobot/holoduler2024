@@ -1,9 +1,10 @@
+###
 # HTTPリクエストファイル
 # 開発時に API エンドポイントに対する HTTP リクエストを定義し、テストやデバッグのために使用するもの
 # リクエストファイルは、JSON フォーマットで記述し、拡張子は .http とする。
 # リクエストファイルは、VSCode の REST Client 拡張機能でも実行できる。
 
-@holoduler.Server_HostAddress = https://localhost:7025
+@holoduler.Server_HostAddress = https://localhost:5148
 
 ### ホロジュール一覧取得 開始日＆終了日指定
 GET {{holoduler.Server_HostAddress}}/api/Holodules?sdate=2024-02-09&edate=2024-02-14
