@@ -46,7 +46,7 @@ export default defineConfig({
     },
     server: {
         proxy: {
-            '^/holodules': {
+            '^/holodule': {
                 target: 'https://localhost:7280/api/',
                 secure: false
             }

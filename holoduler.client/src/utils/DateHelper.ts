@@ -21,12 +21,9 @@ export class DateHelper {
 
     // 文字列からDate型
     static stringToDateTime(stringDateTime: string): Date {
-        const year = Number(stringDateTime.substring(0, 3));
-        const month = Number(stringDateTime.substring(4, 5)) - 1;
-        const day = Number(stringDateTime.substring(6, 7));
-        const hour = Number(stringDateTime.substring(9, 10));
-        const minute = Number(stringDateTime.substring(11, 12));
-        const second = Number(stringDateTime.substring(13, 14));
-        return new Date(year, month, day, hour, minute, second);
+        const year = Number(stringDateTime.substring(0, 4));
+        const month = Number(stringDateTime.substring(5, 7)) - 1;
+        const day = Number(stringDateTime.substring(8, 10));
+        return new Date(year, month, day);
     }
 }

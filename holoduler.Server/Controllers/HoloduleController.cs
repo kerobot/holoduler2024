@@ -8,12 +8,12 @@ namespace holoduler.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HolodulesController : ControllerBase
+    public class HoloduleController : ControllerBase
     {
         private readonly IDataService _dataService;
-        private readonly ILogger<HolodulesController> _logger;
+        private readonly ILogger<HoloduleController> _logger;
 
-        public HolodulesController(ILogger<HolodulesController> logger, IDataService dataService)
+        public HoloduleController(ILogger<HoloduleController> logger, IDataService dataService)
         {
             _logger = logger;
             _dataService = dataService;
@@ -22,11 +22,8 @@ namespace holoduler.Server.Controllers
         [HttpGet()]
         public async Task<IActionResult> Get([FromQuery] string? sdate, [FromQuery] string? edate, [FromQuery] string? code, [FromQuery] string? group)
         {
-#if DEBUG
-            var endpoint = "http://127.0.0.1:8001";
-#else
+            // エンドポイントの指定
             var endpoint = _dataService.Endpoint;
-#endif
             _logger.LogInformation("endpoint:{endpoint}", endpoint);
 
             var tokenpath = "/token";

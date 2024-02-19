@@ -11,19 +11,18 @@ export const useSchedules = () => {
     const [loading, setLoading] = useState(false);
     const [schedules, setSchedules] = useState<Schedules>();
 
-    // TODO: ここで複数パラメータを受け取るようにする
-    const getSchedules = useCallback((dateString: string) => {
+    const getSchedules = useCallback((sdate: string, edate: string) => {
         setLoading(true);
         axiosClient
-        .get<Schedules>(`holodules?sdate=2024-02-09&edate=2024-02-14&group=hololive`)
-        .then((res) =>
-            setSchedules(res.data)
-        )
-        .catch((reason) =>
-            showMessage({ title: reason, status: "error" })
-            //showMessage({ title: "スケジュールの取得に失敗しました", status: "error" })
-        )
-        .finally(() => setLoading(false));
+            .get<Schedules>(`/holodule?sdate=${sdate}&edate=${edate}&group=hololive`)
+            .then((res) => {
+                setSchedules(res.data);
+            })
+            .catch((reason) => {
+                console.log(reason);
+                showMessage({ title: "スケジュールの取得に失敗しました", status: "error" })
+            })
+            .finally(() => setLoading(false));
     }, [showMessage]);
 
     return { getSchedules, loading, schedules };

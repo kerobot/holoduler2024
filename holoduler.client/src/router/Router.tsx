@@ -9,7 +9,7 @@ export const Router = () => {
     return (
         <Routes>
             <Route path="/" element={<HeaderLayout><Holoduler /></HeaderLayout>} />
-            <Route path="/:date" element={<HeaderLayout><Holoduler /></HeaderLayout>} />
+            <Route path="/:date/:days" element={<HeaderLayout><Holoduler /></HeaderLayout>} />
             <Route path="*" element={<Page404 />} />
         </Routes>
     );

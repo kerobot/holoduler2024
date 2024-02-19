@@ -8,11 +8,13 @@ import { useSchedules } from "../../hooks/useSchedules";
 
 // 配信予定ページコンポーネント
 export const Holoduler: FC = memo(() => {
-    const { date } = useParams();
+    const { date, days } = useParams();
     const { getSchedules, loading, schedules } = useSchedules();
 
     const today = new Date();
-    const dateString = date || DateHelper.formatDate(today, "-");
+    const sdate = date || DateHelper.formatDate(today, "-");
+    const addDays = Number(days) || 1;
+    const edate = DateHelper.formatDate(DateHelper.addDays(DateHelper.stringToDateTime(sdate), addDays), "-");
     const didMountRef = useRef(false);
 
     useEffect(() => {
@@ -23,8 +25,8 @@ export const Holoduler: FC = memo(() => {
                 return;
             }
         }
-        getSchedules(dateString)
-    }, [getSchedules, dateString]);
+        getSchedules(sdate, edate)
+    }, [getSchedules, sdate, edate]);
 
     const arr = schedules?.schedules;
 
