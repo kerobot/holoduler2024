@@ -18,7 +18,7 @@ export const StreamDate: FC<Props> = memo((props) => {
     return (
         <HStack>
             <Text fontSize='xl' as='b'>
-                {DateHelper.formatDate(date, "/")}
+                {DateHelper.formatDate(date, "/")} for 
             </Text>
             <NumberInput maxW='60px' value={days} step={step} min={min} max={max} onChange={(e) => onChange(Number(e))}>
                 <NumberInputField />
@@ -28,7 +28,7 @@ export const StreamDate: FC<Props> = memo((props) => {
                 </NumberInputStepper>
             </NumberInput>
             <Text fontSize='xl' as='b'>
-                日分
+                days
             </Text>
         </HStack>
     );

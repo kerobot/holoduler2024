@@ -46,7 +46,7 @@ export const Holoduler: FC = memo(() => {
                     {
                         (arr !== undefined && arr.length > 0) ? (
                             arr.map((schedule) => (
-                                <WrapItem key={schedule.key} mx="auto">
+                                <WrapItem key={schedule.key}>
                                     <StreamCard schedule={schedule} today={today} />
                                 </WrapItem>
                             ))
