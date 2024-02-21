@@ -12,10 +12,12 @@ export const useSchedules = () => {
     const [schedules, setSchedules] = useState<Schedules>();
 
     const getSchedules = useCallback((sdate: string, edate: string) => {
+        const url = `/holodule?sdate=${sdate}&edate=${edate}&group=hololive`;
         setLoading(true);
         axiosClient
-            .get<Schedules>(`/holodule?sdate=${sdate}&edate=${edate}&group=hololive`)
+            .get<Schedules>(url)
             .then((res) => {
+                console.log(url);
                 setSchedules(res.data);
             })
             .catch((reason) => {
