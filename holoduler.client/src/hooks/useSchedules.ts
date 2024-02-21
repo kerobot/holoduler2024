@@ -11,8 +11,8 @@ export const useSchedules = () => {
     const [loading, setLoading] = useState(false);
     const [schedules, setSchedules] = useState<Schedules>();
 
-    const getSchedules = useCallback((sdate: string, edate: string) => {
-        const url = `/holodule?sdate=${sdate}&edate=${edate}&group=hololive`;
+    const getSchedules = useCallback((sdate: string, edate: string, group: string, keyword: string) => {
+        const url = `/holodule?sdate=${sdate}&edate=${edate}&group=${group}&keyword=${keyword}`;
         setLoading(true);
         axiosClient
             .get<Schedules>(url)

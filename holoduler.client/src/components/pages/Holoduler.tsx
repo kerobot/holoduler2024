@@ -15,6 +15,9 @@ export const Holoduler: FC = memo(() => {
     const sdate = date || DateHelper.formatDate(today, "-");
     const addDays = Number(days) || 1;
     const edate = DateHelper.formatDate(DateHelper.addDays(DateHelper.stringToDateTime(sdate), addDays), "-");
+    const group = new URLSearchParams(window.location.search).get("group") || "";
+    const keyword = new URLSearchParams(window.location.search).get("keyword") || "";
+
     const didMountRef = useRef(false);
 
     useEffect(() => {
@@ -25,8 +28,8 @@ export const Holoduler: FC = memo(() => {
                 return;
             }
         }
-        getSchedules(sdate, edate)
-    }, [getSchedules, sdate, edate]);
+        getSchedules(sdate, edate, group, keyword)
+    }, [getSchedules, sdate, edate, group, keyword]);
 
     const arr = schedules?.schedules;
 

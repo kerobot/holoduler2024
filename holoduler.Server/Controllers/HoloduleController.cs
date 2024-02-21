@@ -20,7 +20,7 @@ namespace holoduler.Server.Controllers
         }
 
         [HttpGet()]
-        public async Task<IActionResult> Get([FromQuery] string? sdate, [FromQuery] string? edate, [FromQuery] string? code, [FromQuery] string? group)
+        public async Task<IActionResult> Get([FromQuery] string? sdate, [FromQuery] string? edate, [FromQuery] string? code, [FromQuery] string? group, [FromQuery] string? keyword)
         {
             // エンドポイントの指定
             var endpoint = _dataService.Endpoint;
@@ -50,7 +50,7 @@ namespace holoduler.Server.Controllers
             }
 
             // スケジュールの取得
-            _logger.LogInformation("request holodules sdate:{sdate} edate:{edate} code:{code} group:{group}.", sdate, edate, code, group);
+            _logger.LogInformation("request holodules sdate:{sdate} edate:{edate} code:{code} group:{group} keyword:{keyword}.", sdate, edate, code, group, keyword);
 
             var getRequest = new RestRequest(schedulespath);
             getRequest.AddHeader("Content-Type", "application/json");
@@ -70,6 +70,10 @@ namespace holoduler.Server.Controllers
             if (!string.IsNullOrEmpty(group))
             {
                 getRequest.AddParameter("group", group, ParameterType.GetOrPost);
+            }
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                getRequest.AddParameter("keyword", keyword, ParameterType.GetOrPost);
             }
 
             var getResponse = await client.GetAsync(getRequest);
