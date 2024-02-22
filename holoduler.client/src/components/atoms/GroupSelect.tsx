@@ -10,13 +10,19 @@ type Props = {
 export const GroupSelect: FC<Props> = memo((props) => {
     const { group, onChangeGroup } = props;
 
+    const options = [
+        { value: 'all', label: 'ALL' },
+        { value: 'hololive', label: 'JP' },
+        { value: 'hololive_DEV_IS', label: 'DEV_IS' },
+        { value: 'hololive_en', label: 'EN' },
+        { value: 'hololive_id', label: 'ID' },
+    ];
+
     return (
         <Select maxW='100px' value={group} onChange={(e) => onChangeGroup(e.target.value)} >
-            <option value='all'>ALL</option>
-            <option value='hololive'>JP</option>
-            <option value='hololive_DEV_IS'>DEV_IS</option>
-            <option value='hololive_en'>EN</option>
-            <option value='hololive_id'>ID</option>
+            {options.map((option) => (
+                <option key={option.value} value={option.value}>{option.label}</option>
+            ))}
         </Select>
     );
 });

@@ -16,7 +16,9 @@ export const StreamTime: FC<Props> = memo((props) => {
 
     return (
         <Text fontSize="md" as="b" noOfLines={1} color={timeColor}>
-            {DateHelper.formatTime(date, ":")}
+            {
+                DateHelper.formatDay(date, "/") + " " + DateHelper.formatTime(date, ":")
+            }
         </Text>
     );
 });

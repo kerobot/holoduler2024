@@ -12,6 +12,13 @@ export class DateHelper {
         return `${y}${separator}${m}${separator}${d}`;
     }
 
+    // 日付フォーマット
+    static formatDay(date: Date, separator: string = ""): string {
+        const m = date.getMonth() + 1;
+        const d = date.getDate();
+        return `${m}${separator}${d}`;
+    }
+
     // 時間フォーマット
     static formatTime(date: Date, separator: string = ""): string {
         const h = date.getHours();
