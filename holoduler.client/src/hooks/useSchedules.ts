@@ -16,14 +16,8 @@ export const useSchedules = () => {
         setLoading(true);
         axiosClient
             .get<Schedules>(url)
-            .then((res) => {
-                console.log(url);
-                setSchedules(res.data);
-            })
-            .catch((reason) => {
-                console.log(reason);
-                showMessage({ title: "スケジュールの取得に失敗しました", status: "error" })
-            })
+            .then((res) => setSchedules(res.data))
+            .catch(() => showMessage({ title: "スケジュールの取得に失敗しました", status: "error" }))
             .finally(() => setLoading(false));
     }, [showMessage]);
 
@@ -32,6 +26,7 @@ export const useSchedules = () => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function dateParseChallenge(key: string, val: any) {
+    // streaming_at か published_at は Date に変換
     if (key === "streaming_at" || key === "published_at") {
         const time = Date.parse(val);
         if (!Number.isNaN(time)) {

@@ -27,7 +27,7 @@ export class DateHelper {
     }
 
     // 文字列からDate型
-    static stringToDateTime(stringDateTime: string): Date {
+    static stringToDate(stringDateTime: string): Date {
         const year = Number(stringDateTime.substring(0, 4));
         const month = Number(stringDateTime.substring(5, 7)) - 1;
         const day = Number(stringDateTime.substring(8, 10));

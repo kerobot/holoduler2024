@@ -17,3 +17,7 @@ Accept: application/json
 ### ホロジュール一覧取得 開始日＆終了日＆グループ指定
 GET {{holoduler.Server_HostAddress}}/api/Holodules?sdate=2024-02-09&edate=2024-02-14&group=hololive
 Accept: application/json
+
+### ホロジュール一覧取得 開始日＆終了日＆グループ指定＆キーワード指定
+GET {{holoduler.Server_HostAddress}}/api/Holodules?sdate=2024-02-09&edate=2024-02-14&group=hololive&keyword=ホロライブ
+Accept: application/json

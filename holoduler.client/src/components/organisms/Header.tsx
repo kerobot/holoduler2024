@@ -1,4 +1,5 @@
 import { memo, useCallback, useState, FC } from "react";
+import { useParams } from "react-router-dom";
 import { Flex, Spacer } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,10 +9,15 @@ import { DateHelper } from "../../utils/DateHelper";
 
 // ヘッダーコンポーネント
 export const Header: FC = memo(() => {
-    const [dateState, setDateState] = useState(new Date());
-    const [daysState, setDaysState] = useState(1);
-    const [groupState, setGroupState] = useState("");
-    const [keywordState, setKeywordState] = useState("");
+    const { date, days } = useParams();
+
+    const group = new URLSearchParams(window.location.search).get("group") || "";
+    const keyword = new URLSearchParams(window.location.search).get("keyword") || "";
+
+    const [dateState, setDateState] = useState(DateHelper.stringToDate(date || DateHelper.formatDate(new Date(), "-")));
+    const [daysState, setDaysState] = useState(Number(days) || 1);
+    const [groupState, setGroupState] = useState(group);
+    const [keywordState, setKeywordState] = useState(keyword);
     const navigate = useNavigate();
 
     // 指定した条件を state に保持してページ遷移
