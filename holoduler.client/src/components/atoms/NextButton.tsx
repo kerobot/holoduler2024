@@ -1,13 +1,13 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import { Button } from "@chakra-ui/react";
 import { ArrowRightIcon } from "@chakra-ui/icons";
 
-type Props = {
+type NextButtonProps = {
     onClick: () => void;
 };
 
 // Nextボタンコンポーネント
-export const NextButton: FC<Props> = (props) => {
+export const NextButton: FC<NextButtonProps> = memo((props) => {
     const { onClick } = props;
 
     return (
@@ -19,4 +19,4 @@ export const NextButton: FC<Props> = (props) => {
             onClick={onClick}
         >Next</Button>
     );
-};
+});

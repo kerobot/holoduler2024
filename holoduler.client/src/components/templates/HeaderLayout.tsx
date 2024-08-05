@@ -3,12 +3,12 @@ import { Flex } from "@chakra-ui/react";
 
 import { Header } from "../organisms/Header";
 
-type Props = {
+type HeaderLayoutProps = {
     children: ReactNode;
 };
 
 // テンプレートコンポーネント
-export const HeaderLayout: FC<Props> = memo((props) => {
+export const HeaderLayout: FC<HeaderLayoutProps> = memo((props) => {
     const { children } = props;
 
     return (

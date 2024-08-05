@@ -1,14 +1,14 @@
 import { FC, memo } from "react";
 import { Select } from "@chakra-ui/react";
 
-type Props = {
-    group: string;
+type GroupSelectProps = {
+    group?: string;
     onChangeGroup: (group: string) => void;
 };
 
 // グループ選択コンポーネント
-export const GroupSelect: FC<Props> = memo((props) => {
-    const { group, onChangeGroup } = props;
+export const GroupSelect: FC<GroupSelectProps> = memo((props) => {
+    const { group = 'all', onChangeGroup } = props;
 
     const options = [
         { value: 'all', label: 'ALL' },

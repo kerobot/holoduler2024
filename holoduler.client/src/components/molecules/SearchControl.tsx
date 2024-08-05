@@ -7,7 +7,7 @@ import { StreamDate } from "../atoms/StreamDate";
 import { SearchBox } from "../atoms/SearchBox";
 import { GroupSelect } from "../atoms/GroupSelect";
 
-type Props = {
+type SearchControlProps = {
     date: Date;
     days: number;
     group: string;
@@ -20,7 +20,7 @@ type Props = {
 };
 
 // 日付移動と日付表示と検索を行うコンポーネント
-export const SearchControl: FC<Props> = memo((props) => {
+export const SearchControl: FC<SearchControlProps> = memo((props) => {
     const {
         date,
         days,

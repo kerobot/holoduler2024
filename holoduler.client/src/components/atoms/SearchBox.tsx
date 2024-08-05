@@ -2,15 +2,15 @@ import { FC, memo, useEffect, useState } from "react";
 import { Input } from '@chakra-ui/react'
 import { useDebouncedValue } from "../../hooks/useDebounce";
 
-type Props = {
-    keyword: string;
+type SearchBoxProps = {
+    keyword?: string;
     onChangeKeyword: (value: string) => void;
 };
 
 // キーワード検索コンポーネント
-export const SearchBox: FC<Props> = memo((props) => {
-    const { keyword, onChangeKeyword } = props;
-    const [inputKeyword, setInputKeyword] = useState(keyword ?? "");
+export const SearchBox: FC<SearchBoxProps> = memo((props) => {
+    const { keyword = '', onChangeKeyword } = props;
+    const [inputKeyword, setInputKeyword] = useState(keyword);
     const debouncedValue = useDebouncedValue({ value: inputKeyword, delay: 1000 });
 
     useEffect(() => {

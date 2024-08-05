@@ -17,7 +17,10 @@ export const useSchedules = () => {
         axiosClient
             .get<Schedules>(url)
             .then((res) => setSchedules(res.data))
-            .catch(() => showMessage({ title: "スケジュールの取得に失敗しました", status: "error" }))
+            .catch((err) => {
+                console.error(err);
+                showMessage({ title: "スケジュールの取得に失敗しました", status: "error" })
+            })
             .finally(() => setLoading(false));
     }, [showMessage]);
 

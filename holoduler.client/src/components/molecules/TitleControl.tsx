@@ -1,12 +1,12 @@
 import { FC, memo } from "react";
 import { Box, Heading } from "@chakra-ui/react";
 
-type Props = {
+type TitleControlProps = {
     onClickToday: () => void;
 };
 
 // タイトルを表示するコンポーネント
-export const TitleControl: FC<Props> = memo((props) => {
+export const TitleControl: FC<TitleControlProps> = memo((props) => {
     const { onClickToday } = props;
 
     return (

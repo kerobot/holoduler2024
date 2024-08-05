@@ -5,13 +5,13 @@ import { Schedule } from "../../types/api/schedule";
 import { StreamerHelper } from "../../utils/StreamerHelper";
 import { StreamTime } from "../atoms/StreamTime";
 
-type Props = {
+type StreamCardProps = {
     schedule: Schedule;
     today: Date;
 };
 
 // 配信予定コンポーネント
-export const StreamCard: FC<Props> = memo((props) => {
+export const StreamCard: FC<StreamCardProps> = memo((props) => {
     const { schedule, today } = props;
 
     return (
