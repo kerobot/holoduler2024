@@ -9,7 +9,7 @@ type SearchControlProps = {
     onSearchSchedule: (date: Date, group: string, keyword: string) => void
 };
 
-// 検索条件を指定するコンポーネント
+// 検索条件指定コンポーネント
 export const SearchControl: FC<SearchControlProps> = (props) => {
     const { onSearchSchedule } = props;
 

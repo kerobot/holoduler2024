@@ -1,13 +1,14 @@
 import { FC } from "react";
 import { ScheduleList } from "../molecules/ScheduleList";
+import { Schedule } from "../../types/api/schedule";
 
 interface SidebarProps {
-    items: string[];
-    onItemSelected: (item: string) => void;
+    schedules: Schedule[];
+    onScheduleSelected: (item: Schedule) => void;
 }
 
 export const Sidebar: FC<SidebarProps> = (props) => {
-    const { items, onItemSelected } = props;
+    const { schedules, onScheduleSelected } = props;
 
-    return <ScheduleList items={items} onItemClick={onItemSelected} />;
+    return <ScheduleList schedules={schedules} onItemClick={onScheduleSelected} />;
 };
