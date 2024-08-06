@@ -11,7 +11,6 @@ type StreamTimeProps = {
 // 配信時間表示コンポーネント
 export const StreamTime: FC<StreamTimeProps> = memo((props) => {
     const { date, today } = props;
-
     const timeColor = date.getTime() < today.getTime() ? "gray.500" : "blue.500";
 
     return (

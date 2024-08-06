@@ -3,13 +3,14 @@ import { Input } from '@chakra-ui/react'
 import { useDebouncedValue } from "../../hooks/useDebounce";
 
 type SearchBoxProps = {
+    placeholder: string;
     keyword?: string;
     onChangeKeyword: (value: string) => void;
 };
 
-// ƒL[ƒ[ƒhŒŸõƒRƒ“ƒ|[ƒlƒ“ƒg
+// ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰æ¤œç´¢ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
 export const SearchBox: FC<SearchBoxProps> = memo((props) => {
-    const { keyword = '', onChangeKeyword } = props;
+    const { placeholder, keyword = '', onChangeKeyword } = props;
     const [inputKeyword, setInputKeyword] = useState(keyword);
     const debouncedValue = useDebouncedValue({ value: inputKeyword, delay: 1000 });
 
@@ -19,7 +20,7 @@ export const SearchBox: FC<SearchBoxProps> = memo((props) => {
     }, [debouncedValue, inputKeyword]);
 
     return (
-        <Input maxW='200px' placeholder='keyword' value={inputKeyword} onChange={
+        <Input maxW='200px' placeholder={placeholder} value={inputKeyword} onChange={
             (e) => setInputKeyword(e.target.value)
         } />
     );
