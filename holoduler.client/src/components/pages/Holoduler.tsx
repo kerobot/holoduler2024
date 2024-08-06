@@ -14,7 +14,7 @@ export const Holoduler: FC = memo(() => {
     const today = new Date();
     const sdate = date || DateHelper.formatDate(today, "-");
     const addDays = Number(days) || 1;
-    const edate = DateHelper.formatDate(DateHelper.addDays(DateHelper.stringToDate(sdate), addDays), "-");
+    const edate = DateHelper.formatDate(DateHelper.addDays(DateHelper.stringToDate(sdate), addDays-1), "-");
     const group = new URLSearchParams(window.location.search).get("group") || "";
     const keyword = new URLSearchParams(window.location.search).get("keyword") || "";
 

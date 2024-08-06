@@ -108,5 +108,10 @@ export class StreamerHelper {
         "HLEN13": { name: "Koseki Bijou", img: "koseki_bijou.jpg", ch: "@KosekiBijou" },
         "HLEN14": { name: "Nerissa Ravencroft", img: "nerissa_ravencroft.jpg", ch: "@NerissaRavencroft" },
         "HLEN15": { name: "FUWAMOCO", img: "fuwamoco.jpg", ch: "@FUWAMOCOch" },
+
+        "HLEN16": { name: "Elizabeth Rose Bloodflame", img: "elizabeth_rose_bloodflame.jpg", ch: "@holoen_erbloodflame" },
+        "HLEN17": { name: "Gigi Murin", img: "gigi_murin.jpg", ch: "@holoen_gigimurin" },
+        "HLEN18": { name: "Cecilia Immergreen", img: "cecilia_immergreen.jpg", ch: "@holoen_ceciliaimmergreen" },
+        "HLEN19": { name: "Raora Panthera", img: "raora_panthera.jpg", ch: "@holoen_raorapanthera" },
     };
 }
