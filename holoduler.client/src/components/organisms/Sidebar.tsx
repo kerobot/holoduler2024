@@ -1,16 +1,17 @@
 import { FC } from "react";
 import { ScheduleList } from "../molecules/ScheduleList";
 import { Schedule } from "../../types/api/schedule";
-import { VStack, Box } from "@chakra-ui/react";
+import { VStack, Box, Spinner } from "@chakra-ui/react";
 
 interface SidebarProps {
+    loading: boolean;
     schedules: Schedule[];
     onScheduleSelected: (item: Schedule) => void;
 }
 
 // サイドバーコンポーネント
 export const Sidebar: FC<SidebarProps> = (props) => {
-    const { schedules, onScheduleSelected } = props;
+    const { loading, schedules, onScheduleSelected } = props;
 
     return (
         <Box
@@ -21,9 +22,20 @@ export const Sidebar: FC<SidebarProps> = (props) => {
             borderColor="gray.200"
             p="4"
         >
-            <VStack align="start" spacing="2">
-                <ScheduleList schedules={schedules} onItemClick={onScheduleSelected} />
-            </VStack>
+            {loading ? (
+                <VStack align="center" justify="center" h="100%">
+                    <Spinner
+                        thickness='4px'
+                        speed='0.65s'
+                        emptyColor='gray.200'
+                        color='blue.500'
+                        size='xl' />
+                </VStack>
+            ) : (
+                <VStack align="start" spacing="2">
+                    <ScheduleList schedules={schedules} onItemClick={onScheduleSelected} />
+                </VStack>
+            )}
         </Box>
     );
 };

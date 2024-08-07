@@ -18,7 +18,7 @@ export const GroupSelect: FC<GroupSelectProps> = (props) => {
     ];
 
     return (
-        <Select maxW='100px' value={group} onChange={(e) => onChangeGroup(e.target.value)} >
+        <Select value={group} onChange={(e) => onChangeGroup(e.target.value)} >
             {options.map((option) => (
                 <option key={option.value} value={option.value}>{option.label}</option>
             ))}

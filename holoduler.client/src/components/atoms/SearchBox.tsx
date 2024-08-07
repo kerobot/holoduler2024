@@ -20,7 +20,7 @@ export const SearchBox: FC<SearchBoxProps> = memo((props) => {
     }, [debouncedValue, inputKeyword]);
 
     return (
-        <Input maxW='200px' placeholder={placeholder} value={inputKeyword} onChange={
+        <Input placeholder={placeholder} value={inputKeyword} onChange={
             (e) => setInputKeyword(e.target.value)
         } />
     );
