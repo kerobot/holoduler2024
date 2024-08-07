@@ -9,7 +9,7 @@ type SearchControlProps = {
     onSearchSchedule: (date: Date, group: string, keyword: string) => void
 };
 
-// 検索条件指定コンポーネント
+// 検索指定コンポーネント
 export const SearchControl: FC<SearchControlProps> = (props) => {
     const { onSearchSchedule } = props;
 
@@ -19,6 +19,7 @@ export const SearchControl: FC<SearchControlProps> = (props) => {
 
     useEffect(() => {
         onSearchSchedule(searchDate, searchGroup, searchKeyword);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchDate, searchGroup, searchKeyword]);
 
     const handleOnChangeDate = (date: Date) => {

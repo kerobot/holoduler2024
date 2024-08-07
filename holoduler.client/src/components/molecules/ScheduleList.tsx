@@ -8,20 +8,19 @@ type ScheduleListProps = {
     onItemClick: (schedule: Schedule) => void;
 }
 
+// スケジュール一覧コンポーネント
 export const ScheduleList: FC<ScheduleListProps> = (props) => {
     const { schedules, onItemClick } = props;
 
-    return (
-        <>
-            {
-                (schedules !== undefined && schedules.length > 0) ? (
-                    schedules.map((schedule) => (
-                        <ScheduleItem key={schedule.key} schedule={schedule} onItemClick={() => onItemClick(schedule)} />
-                    ))
-                ) : (
-                    <Text fontSize="md" as="b">not exists</Text>
-                )
-            }
-        </>
-    );
+    if (schedules !== undefined && schedules.length > 0) {
+        return (
+            <>
+                {schedules.map((schedule) => (
+                    <ScheduleItem key={schedule.key} schedule={schedule} onItemClick={() => onItemClick(schedule)} />
+                ))}
+            </>
+        );
+    } else {
+        return <Text fontSize="md" as="b">not exists</Text>;
+    }
 };
