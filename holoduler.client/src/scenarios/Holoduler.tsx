@@ -6,7 +6,7 @@ import { Header } from "../components/organisms/Header";
 import { Sidebar } from "../components/organisms/Sidebar";
 import { useSchedules } from "../hooks/useSchedules";
 import { Schedule } from "../types/api/schedule";
-import { YoutubeIframe } from "../components/atoms/YoutubeIframe";
+import { YoutubePlayer } from "../components/atoms/YoutubePlayer";
 
 // 配信予定ページコンポーネント
 export const Holoduler: FC = memo(() => {
@@ -43,12 +43,6 @@ export const Holoduler: FC = memo(() => {
         setSearchResults(schedules?.schedules || []);
     }, [schedules]);
 
-    const opts = {
-        playerVars: {
-            autoplay: 1,
-        },
-    };
-
     return (
         <Flex direction="column" height="100vh">
             {/* Header */}
@@ -56,7 +50,6 @@ export const Holoduler: FC = memo(() => {
             <Flex flex="1">
                 {/* Sidebar */}
                 <Sidebar loading={loading} schedules={searchResults} onScheduleSelected={handleItemSelected} />
-
                 {/* Main Content */}
                 <Box flex="1" p={4}>
                     <Flex direction="column" height="100%">
@@ -64,7 +57,7 @@ export const Holoduler: FC = memo(() => {
                         <Box flex="1" mb={4} position="relative">
                             <Heading size="md">{selectedItem?.title || "視聴中"}</Heading>
                             {selectedItem ? (
-                                <YoutubeIframe videoId={selectedItem.video_id} autoPlay title={selectedItem.title} />
+                                <YoutubePlayer videoId={selectedItem.video_id} title={selectedItem.title} autoPlay={true} />
                             ) : (
                                 <Box>Select a video</Box>
                             )}
@@ -94,11 +87,6 @@ export const Holoduler: FC = memo(() => {
                                             justifyContent="center"
                                             bg="gray.200"
                                         >
-                                            {/*<Box position="relative" width="100%" paddingTop="56.25%"> */}{/* 16:9 aspect ratio */}
-                                            {/*    <Box bg="gray" position="absolute" top="0" left="0" width="100%" height="100%">*/}
-                                            {/*        {queuedItem.video_id}*/}
-                                            {/*    </Box>*/}
-                                            {/*</Box>*/}
                                             <YouTube videoId={queuedItem.video_id} opts={{ width: '320px', height: '180px' }} />
                                             <IconButton
                                                 icon={<TriangleUpIcon />}
