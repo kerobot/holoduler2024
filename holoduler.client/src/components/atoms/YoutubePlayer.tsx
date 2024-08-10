@@ -3,13 +3,13 @@ import { FC, useState, useEffect, useCallback, useRef } from "react";
 type YoutubePlayerProps = {
     videoId: string;
     title: string;
-    autoPlay?: boolean;
+    autoplay?: boolean;
+    muted?: boolean;
 }
 
 export const YoutubePlayer: FC<YoutubePlayerProps> = (props) => {
-    const { videoId, title, autoPlay } = props;
-
-    const videoURL = `https://www.youtube.com/embed/${videoId}${autoPlay ? '?autoplay=1' : ''}`;
+    const { videoId, title, autoplay, muted } = props;
+    const videoSrc = `https://www.youtube.com/embed/${videoId}?autoplay=${autoplay ? 1 : 0}&mute=${muted ? 1 : 0}`;
     const iframeRef = useRef<HTMLIFrameElement>(null);
     const defaultHeight = 495;
     const [videoHeight, setVideoHeight] = useState<number>(
@@ -20,6 +20,7 @@ export const YoutubePlayer: FC<YoutubePlayerProps> = (props) => {
     // window.innerWidth ‚É‰ž‚¶‚Ä”ä—¦(ratio)‚ð•ÏX‚·‚é‚Ì‚àƒAƒŠ
     const calculateVideoHeight = () => {
         const ratio = 1.0;
+        // const ratio = window.innerWidth > 990 ? 1.0 : window.innerWidth > 522 ? 1.2 : window.innerWidth > 400 ? 1.45 : 1.85;
         const height = iframeRef.current ? iframeRef.current.offsetWidth * 0.5625 : defaultHeight;
         return setVideoHeight(Math.floor(height * ratio));
     }
@@ -43,7 +44,7 @@ export const YoutubePlayer: FC<YoutubePlayerProps> = (props) => {
             title={title}
             width="100%"
             height={`${videoHeight}px`}
-            src={videoURL}
+            src={videoSrc}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
         />
