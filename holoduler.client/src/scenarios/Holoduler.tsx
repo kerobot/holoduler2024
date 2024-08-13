@@ -1,5 +1,5 @@
 import { memo, useEffect, FC, useState, useRef } from "react";
-import YouTube from 'react-youtube';
+/*import YouTube from 'react-youtube';*/
 import { Box, Grid, Flex, Heading, IconButton, Text, GridItem, Stack, Button } from "@chakra-ui/react";
 import { CloseIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import { Header } from "../components/organisms/Header";
@@ -7,6 +7,7 @@ import { Sidebar } from "../components/organisms/Sidebar";
 import { useSchedules } from "../hooks/useSchedules";
 import { Schedule } from "../types/api/schedule";
 import { YoutubePlayer } from "../components/atoms/YoutubePlayer";
+/*import { YoutubePlayerEx } from "../components/atoms/YoutubePlayerEx";*/
 
 // 配信予定ページコンポーネント
 export const Holoduler: FC = memo(() => {
@@ -15,8 +16,7 @@ export const Holoduler: FC = memo(() => {
     const [searchResults, setSearchResults] = useState<Schedule[]>([]);
 
     const [allMuted, setAllMuted] = useState(true);
-    const [allAutoplay, setAllAutoplay] = useState(false);
-    //const [allPlaying, setAllPlaying] = useState(false);
+    const [allPlaying, setAllPlaying] = useState(false);
 
     const { getSchedules, loading, schedules } = useSchedules();
 
@@ -34,9 +34,8 @@ export const Holoduler: FC = memo(() => {
         getSchedules(date, date, group, keyword);
     };
 
-    const toggleAllMute = () => { setAllMuted(!allMuted); };
-    const toggleAllAutoplay = () => { setAllAutoplay(!allAutoplay); };
-    //const toggleAllPlaying = () => { setAllPlaying(!allPlaying); };
+    const toggleAllMuted = () => { setAllMuted(!allMuted); };
+    const toggleAllPlaying = () => { setAllPlaying(!allPlaying); };
 
     const didMountRef = useRef(false);
 
@@ -62,28 +61,27 @@ export const Holoduler: FC = memo(() => {
                 <Box flex="1" p={4}>
                     <Flex direction="column" height="100%">
                         {/* Upper Part */}
-                        <Box flex="1" mb={4} position="relative">
-                            <Heading size="md">{selectedItem?.title || "視聴中"}</Heading>
-                            {selectedItem ? (
-                                <YoutubePlayer videoId={selectedItem.video_id} title={selectedItem.title} autoplay={true} muted={false} />
-                            ) : (
-                                <Box>Select a video</Box>
+                        <Box flex="0 1 auto" mb={4} position="relative">
+                            {selectedItem && (
+                                <Stack spacing={2}>
+                                    <Heading size="md">{selectedItem?.title || "視聴中"}</Heading>
+                                    <YoutubePlayer videoId={selectedItem.video_id} playing={true} muted={false} />
+                                </Stack>
                             )}
                         </Box>
                         {/* Lower Part */}
                         <Box flex="1" overflowY="auto">
-                            <Stack direction={["column", "row"]} spacing="3" alignItems="center">
-                                <Text>Selected videos</Text>
-                                <Button onClick={toggleAllMute}>
-                                    {allMuted ? 'Unmute All' : 'Mute All'}
-                                </Button>
-                                <Button onClick={toggleAllAutoplay}>
-                                    {allAutoplay ? 'Disable Autoplay' : 'Enable Autoplay'}
-                                </Button>
-                            {/*    <Button onClick={toggleAllPlaying}>*/}
-                            {/*        {allPlaying ? 'Pause All' : 'Play All'}*/}
-                            {/*    </Button>*/}
-                            </Stack>
+                            {queue.length > 0 && (
+                                <Stack direction={["column", "row"]} spacing="3" alignItems="center" marginBottom="2">
+                                    <Text>Selected videos</Text>
+                                    <Button onClick={toggleAllMuted} colorScheme={allMuted ? "blue" : "red"}>
+                                        {allMuted ? 'Unmute All' : 'Mute All'}
+                                    </Button>
+                                    <Button onClick={toggleAllPlaying} colorScheme={allPlaying ? "red" : "blue"}>
+                                        {allPlaying ? 'Stop All' : 'Play All'}
+                                    </Button>
+                                </Stack>
+                            )}
                             <Grid templateColumns="repeat(auto-fit, minmax(320px, 1fr))" gap={4}>
                                 {queue.map((queuedItem, index) => (
                                     <GridItem
@@ -106,7 +104,7 @@ export const Holoduler: FC = memo(() => {
                                             justifyContent="center"
                                             bg="gray.200"
                                         >
-                                            <YoutubePlayer videoId={queuedItem.video_id} title={queuedItem.title} autoplay={allAutoplay} muted={allMuted} />
+                                            <YoutubePlayer videoId={queuedItem.video_id} playing={allPlaying} muted={allMuted} />
                                             <IconButton
                                                 icon={<TriangleUpIcon />}
                                                 position="absolute"

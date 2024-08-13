@@ -1,52 +1,62 @@
 import { FC, useState, useEffect, useCallback, useRef } from "react";
+import ReactPlayer from 'react-player/youtube'
 
 type YoutubePlayerProps = {
     videoId: string;
-    title: string;
-    autoplay?: boolean;
+    playing?: boolean;
     muted?: boolean;
 }
 
 export const YoutubePlayer: FC<YoutubePlayerProps> = (props) => {
-    const { videoId, title, autoplay, muted } = props;
-    const videoSrc = `https://www.youtube.com/embed/${videoId}?autoplay=${autoplay ? 1 : 0}&mute=${muted ? 1 : 0}`;
-    const iframeRef = useRef<HTMLIFrameElement>(null);
-    const defaultHeight = 495;
-    const [videoHeight, setVideoHeight] = useState<number>(
-        iframeRef.current ? iframeRef.current.offsetWidth * 0.5625 : defaultHeight // 0.5625 = 16:9
-    );
 
-    // iFrame の横幅に応じて0.5625 = 16:9の高さを計算
-    // window.innerWidth に応じて比率(ratio)を変更するのもアリ
+    const { videoId, playing = false, muted = true } = props;
+    const videoSrc = `https://www.youtube.com/embed/${videoId}`;
+    const playerRef = useRef<ReactPlayer>(null);
+    const defaultHeight = 495;
+
+    // playerRef から辿った iFrame の横幅に応じて 横幅×0.5625 = 16:9 の高さを計算
+    const getVideoHeight = () => {
+        const iframe = playerRef.current?.getInternalPlayer()?.getIframe();
+        return iframe ? iframe.offsetWidth * 0.5625 : defaultHeight;
+    }
+
+    // iFrame の高さを保持
+    const [videoHeight, setVideoHeight] = useState<number>(getVideoHeight());
+
+    // iFrame の高さを更新
     const calculateVideoHeight = () => {
-        const ratio = 1.0;
-        // const ratio = window.innerWidth > 990 ? 1.0 : window.innerWidth > 522 ? 1.2 : window.innerWidth > 400 ? 1.45 : 1.85;
-        const height = iframeRef.current ? iframeRef.current.offsetWidth * 0.5625 : defaultHeight;
-        return setVideoHeight(Math.floor(height * ratio));
+        return setVideoHeight(getVideoHeight());
     }
 
     // iFrame の横幅が変更されたときに高さを再計算するためのコールバック関数
     // useCallback でメモ化しているが、依存配列を[]としているため初回レンダリング時に関数が定義される
     const handleChangeVideoWidth = useCallback(() => {
         return calculateVideoHeight();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // コールバック関数が定義された際に、ウィンドウ幅の変更に応じて高さを再計算するイベントリスナーを追加
     useEffect(() => {
         window.addEventListener("resize", handleChangeVideoWidth);
-        calculateVideoHeight();
         return () => window.removeEventListener("resize", handleChangeVideoWidth);
-    }, [handleChangeVideoWidth]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [calculateVideoHeight]);
+
+    // 動画の準備が完了した際に初回の高さ計算
+    const onReady = () => {
+        calculateVideoHeight();
+    }
 
     return (
-        <iframe
-            ref={iframeRef}
-            title={title}
-            width="100%"
+        <ReactPlayer
+            ref={playerRef}
+            onReady={onReady}
+            width="100 % "
             height={`${videoHeight}px`}
-            src={videoSrc}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
+            url={videoSrc}
+            playing={playing}
+            muted={muted}
+            controls
         />
     );
 };
