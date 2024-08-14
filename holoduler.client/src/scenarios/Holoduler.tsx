@@ -1,12 +1,13 @@
-import { memo, useEffect, FC, useState, useRef } from "react";
-/*import YouTube from 'react-youtube';*/
-import { Box, Flex, Heading, IconButton, Text, Stack, Button, Wrap, WrapItem, ButtonGroup } from "@chakra-ui/react";
+import { memo, useEffect, FC, useState } from "react";
+import { Box, Flex, IconButton, Wrap, WrapItem } from "@chakra-ui/react";
 import { CloseIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import { Header } from "../components/organisms/Header";
 import { Sidebar } from "../components/organisms/Sidebar";
 import { useSchedules } from "../hooks/useSchedules";
 import { Schedule } from "../types/api/schedule";
 import { YoutubePlayer } from "../components/atoms/YoutubePlayer";
+import { TopArea } from "../components/organisms/TopArea";
+import { MiddleArea } from "../components/organisms/MiddleArea";
 /*import { YoutubePlayerEx } from "../components/atoms/YoutubePlayerEx";*/
 
 // 配信予定ページコンポーネント
@@ -14,7 +15,7 @@ export const Holoduler: FC = memo(() => {
     const [searchResults, setSearchResults] = useState<Schedule[]>([]);
     const [selectedItems, setSelectedItems] = useState<Schedule[]>([]);
     const [selectedItem, setSelectedItem] = useState<Schedule | null>(null);
-    const [allMuted, setAllMuted] = useState(true);
+    const [allUnmuted, setAllUnmuted] = useState(false);
     const [allPlaying, setAllPlaying] = useState(false);
 
     const { getSchedules, loading, schedules } = useSchedules();
@@ -39,19 +40,8 @@ export const Holoduler: FC = memo(() => {
         getSchedules(date, date, group, keyword);
     };
 
-    const toggleAllMuted = () => { setAllMuted(!allMuted); };
-    const toggleAllPlaying = () => { setAllPlaying(!allPlaying); };
-
-    const didMountRef = useRef(false);
-
+    // スケジュールが取得された際に検索結果を更新
     useEffect(() => {
-        // strict モード対策
-        if (process.env.NODE_ENV === "development") {
-            if (didMountRef.current) {
-                didMountRef.current = false;
-                return;
-            }
-        }
         setSearchResults(schedules?.schedules || []);
     }, [schedules]);
 
@@ -64,27 +54,12 @@ export const Holoduler: FC = memo(() => {
                 <Sidebar loading={loading} schedules={searchResults} onScheduleSelected={handleItemSelected} />
                 <Flex direction="column" flex="1">
                     {/* Top */ }
-                    <Box>
-                        {selectedItem && (
-                            <Stack spacing={0}>
-                                <Heading size="md" mb="1">{selectedItem.title}</Heading>
-                                <YoutubePlayer videoId={selectedItem.video_id} playing={true} muted={false} />
-                            </Stack>
-                        )}
-                    </Box>
+                    {selectedItem && (
+                        <TopArea title={selectedItem.title} video_id={selectedItem.video_id} playing={true} muted={false} />
+                    )}
                     {/* Middle */}
                     {selectedItems.length > 0 && (
-                        <Box>
-                            <Stack direction={["column", "row"]} spacing="2" alignItems="center" m="1">
-                                <Text>Selected videos</Text>
-                                <Button onClick={toggleAllMuted} colorScheme={allMuted ? "blue" : "red"}>
-                                    {allMuted ? 'Unmute All' : 'Mute All'}
-                                </Button>
-                                <Button onClick={toggleAllPlaying} colorScheme={allPlaying ? "red" : "blue"}>
-                                    {allPlaying ? 'Stop All' : 'Play All'}
-                                </Button>
-                            </Stack>
-                        </Box>
+                        <MiddleArea allUnmuted={allUnmuted} allPlaying={allPlaying} onAllUnmuted={setAllUnmuted} onAllPlaying={setAllPlaying} />
                     )}
                     {/* Bottom */}
                     <Box flex="1" overflowY="auto">
@@ -100,7 +75,7 @@ export const Holoduler: FC = memo(() => {
                                         alignItems="center"
                                         justifyContent="center"
                                     >
-                                        <YoutubePlayer videoId={item.video_id} playing={allPlaying} muted={allMuted} />
+                                        <YoutubePlayer videoId={item.video_id} playing={allPlaying} muted={!allUnmuted} />
                                         <IconButton
                                             icon={<TriangleUpIcon />}
                                             position="absolute"
