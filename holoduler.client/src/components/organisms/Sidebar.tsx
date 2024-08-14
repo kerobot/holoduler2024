@@ -18,7 +18,6 @@ export const Sidebar: FC<SidebarProps> = (props) => {
             w="340px" // サイドバーの幅
             h="calc(100vh - 60px)" // ヘッダーの高さを引いた高さ
             overflowY="auto" // 縦方向にスクロール可能
-            borderRight="1px"
             borderColor="gray.200"
             p="4"
         >

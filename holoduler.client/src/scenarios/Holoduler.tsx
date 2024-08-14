@@ -1,6 +1,6 @@
 import { memo, useEffect, FC, useState, useRef } from "react";
 /*import YouTube from 'react-youtube';*/
-import { Box, Grid, Flex, Heading, IconButton, Text, GridItem, Stack, Button } from "@chakra-ui/react";
+import { Box, Flex, Heading, IconButton, Text, Stack, Button, Wrap, WrapItem, ButtonGroup } from "@chakra-ui/react";
 import { CloseIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import { Header } from "../components/organisms/Header";
 import { Sidebar } from "../components/organisms/Sidebar";
@@ -19,14 +19,19 @@ export const Holoduler: FC = memo(() => {
 
     const { getSchedules, loading, schedules } = useSchedules();
 
-    // 動画をリストに追加
+    // 選択したアイテムをリストに追加（リストに存在しない場合にスプレッド構文を利用してアイテムを追加）
     const handleItemSelected = (item: Schedule) => {
-        setSelectedItems((prevItem) => [...prevItem, item]);
+        setSelectedItems((items) => {
+            if (items.some((items) => items.key === item.key)) {
+                return items;
+            }
+            return [...items, item];
+        });
     };
 
-    // インデックスで指定した動画をリストから削除
+    // インデックスで指定したアイテムをリストから削除
     const handleItemRemove = (index: number) => {
-        setSelectedItems((prevItem) => prevItem.filter((_, i) => i !== index));
+        setSelectedItems((items) => items.filter((_, i) => i !== index));
     };
 
     // 検索条件を元にスケジュールを検索
@@ -54,82 +59,72 @@ export const Holoduler: FC = memo(() => {
         <Flex direction="column" height="100vh">
             {/* Header */}
             <Header onSearchSchedule={handleSearch} />
-            <Flex flex="1">
+            <Flex flex="1" overflow="hidden">
                 {/* Sidebar */}
                 <Sidebar loading={loading} schedules={searchResults} onScheduleSelected={handleItemSelected} />
-                {/* Main Content */}
-                <Box flex="1" p={4}>
-                    <Flex direction="column" height="100%">
-                        {/* Upper Part */}
-                        <Box flex="0 1 auto" mb={4} position="relative">
-                            {selectedItem && (
-                                <Stack spacing={2}>
-                                    <Heading size="md">{selectedItem?.title || "視聴中"}</Heading>
-                                    <YoutubePlayer videoId={selectedItem.video_id} playing={true} muted={false} />
-                                </Stack>
-                            )}
+                <Flex direction="column" flex="1">
+                    {/* Top */ }
+                    <Box>
+                        {selectedItem && (
+                            <Stack spacing={0}>
+                                <Heading size="md" mb="1">{selectedItem.title}</Heading>
+                                <YoutubePlayer videoId={selectedItem.video_id} playing={true} muted={false} />
+                            </Stack>
+                        )}
+                    </Box>
+                    {/* Middle */}
+                    {selectedItems.length > 0 && (
+                        <Box>
+                            <Stack direction={["column", "row"]} spacing="2" alignItems="center" m="1">
+                                <Text>Selected videos</Text>
+                                <Button onClick={toggleAllMuted} colorScheme={allMuted ? "blue" : "red"}>
+                                    {allMuted ? 'Unmute All' : 'Mute All'}
+                                </Button>
+                                <Button onClick={toggleAllPlaying} colorScheme={allPlaying ? "red" : "blue"}>
+                                    {allPlaying ? 'Stop All' : 'Play All'}
+                                </Button>
+                            </Stack>
                         </Box>
-                        {/* Lower Part */}
-                        <Box flex="1" overflowY="auto">
-                            {selectedItems.length > 0 && (
-                                <Stack direction={["column", "row"]} spacing="3" alignItems="center" marginBottom="2">
-                                    <Text>Selected videos</Text>
-                                    <Button onClick={toggleAllMuted} colorScheme={allMuted ? "blue" : "red"}>
-                                        {allMuted ? 'Unmute All' : 'Mute All'}
-                                    </Button>
-                                    <Button onClick={toggleAllPlaying} colorScheme={allPlaying ? "red" : "blue"}>
-                                        {allPlaying ? 'Stop All' : 'Play All'}
-                                    </Button>
-                                </Stack>
-                            )}
-                            <Grid templateColumns="repeat(auto-fit, minmax(320px, 1fr))" gap={4}>
-                                {selectedItems.map((item, index) => (
-                                    <GridItem
-                                        key={index}
+                    )}
+                    {/* Bottom */}
+                    <Box flex="1" overflowY="auto">
+                        <Wrap spacing="2">
+                            {selectedItems.map((item, index) => (
+                                <WrapItem key={index}>
+                                    <Box
+                                        bg="gray.200"
                                         width="320px"
                                         height="180px"
-                                        bg="gray.200"
                                         position="relative"
-                                        borderRadius="md"
-                                        cursor="pointer"
+                                        display="flex"
+                                        alignItems="center"
+                                        justifyContent="center"
                                     >
-                                        <Box
+                                        <YoutubePlayer videoId={item.video_id} playing={allPlaying} muted={allMuted} />
+                                        <IconButton
+                                            icon={<TriangleUpIcon />}
                                             position="absolute"
-                                            top="0"
-                                            left="0"
-                                            right="0"
-                                            bottom="0"
-                                            display="flex"
-                                            alignItems="center"
-                                            justifyContent="center"
-                                            bg="gray.200"
-                                        >
-                                            <YoutubePlayer videoId={item.video_id} playing={allPlaying} muted={allMuted} />
-                                            <IconButton
-                                                icon={<TriangleUpIcon />}
-                                                position="absolute"
-                                                top="0"
-                                                left="0"
-                                                onClick={() => setSelectedItem(item)}
-                                                aria-label="Select"
-                                                size="sm"
-                                            />
-                                            <IconButton
-                                                icon={<CloseIcon />}
-                                                position="absolute"
-                                                top="0"
-                                                right="0"
-                                                onClick={() => handleItemRemove(index)}
-                                                aria-label="Close"
-                                                size="sm"
-                                            />
-                                        </Box>
-                                    </GridItem>
-                                ))}
-                            </Grid>
-                        </Box>
-                    </Flex>
-                </Box>
+                                            top="2px"
+                                            left="2px"
+                                            onClick={() => setSelectedItem(item)}
+                                            aria-label="Select"
+                                            size="sm"
+                                        />
+                                        <IconButton
+                                            icon={<CloseIcon />}
+                                            position="absolute"
+                                            top="2px"
+                                            right="2px"
+                                            onClick={() => handleItemRemove(index)}
+                                            aria-label="Close"
+                                            size="sm"
+                                        />
+                                    </Box>
+                                </WrapItem>
+                            ))}
+                        </Wrap>
+                    </Box>
+                </Flex>
             </Flex>
         </Flex>
     );
