@@ -11,25 +11,25 @@ import { YoutubePlayer } from "../components/atoms/YoutubePlayer";
 
 // 配信予定ページコンポーネント
 export const Holoduler: FC = memo(() => {
-    const [queue, setQueue] = useState<Schedule[]>([]);
-    const [selectedItem, setSelectedItem] = useState<Schedule | null>(null);
     const [searchResults, setSearchResults] = useState<Schedule[]>([]);
-
+    const [selectedItems, setSelectedItems] = useState<Schedule[]>([]);
+    const [selectedItem, setSelectedItem] = useState<Schedule | null>(null);
     const [allMuted, setAllMuted] = useState(true);
     const [allPlaying, setAllPlaying] = useState(false);
 
     const { getSchedules, loading, schedules } = useSchedules();
 
-    // 選択した動画をキューに追加します
+    // 動画をリストに追加
     const handleItemSelected = (item: Schedule) => {
-        setQueue((prevQueue) => [...prevQueue, item]);
+        setSelectedItems((prevItem) => [...prevItem, item]);
     };
 
+    // インデックスで指定した動画をリストから削除
     const handleItemRemove = (index: number) => {
-        setQueue((prevQueue) => prevQueue.filter((_, i) => i !== index));
+        setSelectedItems((prevItem) => prevItem.filter((_, i) => i !== index));
     };
 
-    // 検索条件を元にスケジュールを検索します
+    // 検索条件を元にスケジュールを検索
     const handleSearch = (date: Date, group: string, keyword: string) => {
         getSchedules(date, date, group, keyword);
     };
@@ -71,7 +71,7 @@ export const Holoduler: FC = memo(() => {
                         </Box>
                         {/* Lower Part */}
                         <Box flex="1" overflowY="auto">
-                            {queue.length > 0 && (
+                            {selectedItems.length > 0 && (
                                 <Stack direction={["column", "row"]} spacing="3" alignItems="center" marginBottom="2">
                                     <Text>Selected videos</Text>
                                     <Button onClick={toggleAllMuted} colorScheme={allMuted ? "blue" : "red"}>
@@ -83,7 +83,7 @@ export const Holoduler: FC = memo(() => {
                                 </Stack>
                             )}
                             <Grid templateColumns="repeat(auto-fit, minmax(320px, 1fr))" gap={4}>
-                                {queue.map((queuedItem, index) => (
+                                {selectedItems.map((item, index) => (
                                     <GridItem
                                         key={index}
                                         width="320px"
@@ -104,13 +104,13 @@ export const Holoduler: FC = memo(() => {
                                             justifyContent="center"
                                             bg="gray.200"
                                         >
-                                            <YoutubePlayer videoId={queuedItem.video_id} playing={allPlaying} muted={allMuted} />
+                                            <YoutubePlayer videoId={item.video_id} playing={allPlaying} muted={allMuted} />
                                             <IconButton
                                                 icon={<TriangleUpIcon />}
                                                 position="absolute"
                                                 top="0"
                                                 left="0"
-                                                onClick={() => setSelectedItem(queuedItem)}
+                                                onClick={() => setSelectedItem(item)}
                                                 aria-label="Select"
                                                 size="sm"
                                             />

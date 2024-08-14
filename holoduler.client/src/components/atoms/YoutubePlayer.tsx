@@ -12,7 +12,7 @@ export const YoutubePlayer: FC<YoutubePlayerProps> = (props) => {
     const { videoId, playing = false, muted = true } = props;
     const videoSrc = `https://www.youtube.com/embed/${videoId}`;
     const playerRef = useRef<ReactPlayer>(null);
-    const defaultHeight = 495;
+    const defaultHeight = 0;
 
     // playerRef ‚©‚ç’H‚Á‚½ iFrame ‚Ì‰¡•‚É‰ž‚¶‚Ä ‰¡•~0.5625 = 16:9 ‚Ì‚‚³‚ðŒvŽZ
     const getVideoHeight = () => {
