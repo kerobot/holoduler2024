@@ -37,12 +37,13 @@ export const YoutubePlayer: FC<YoutubePlayerProps> = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // コールバック関数が定義された際に、ウィンドウ幅の変更に応じて呼び出すイベントリスナーを追加する
+    // ウィンドウ幅の変更に応じて呼び出すイベントリスナーを追加する
+    // useEffect の依存配列を[]としているため初回レンダリング時のみ実行される
     useEffect(() => {
         window.addEventListener("resize", handleChangeVideoWidth);
         return () => window.removeEventListener("resize", handleChangeVideoWidth);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [calculateVideoHeight]);
+    }, []);
 
     // 動画の準備が完了した際に高さを計算しておく
     const onReady = () => {
