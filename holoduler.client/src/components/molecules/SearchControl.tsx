@@ -38,7 +38,7 @@ export const SearchControl: FC<SearchControlProps> = (props) => {
         <ButtonGroup gap='2'>
             <Center><DateSelect date={searchDate} onChangeDate={handleOnChangeDate} /></Center>
             <GroupSelect group={searchGroup} onChangeGroup={handleOnChangeGroup} />
-            <SearchBox placeholder="タイトルまたは概要欄" keyword={searchKeyword} onChangeKeyword={handleOnChangeKeyword} />
+            <SearchBox placeholder="タイトルまたは概要欄" keyword={searchKeyword} width={"200%"} onChangeKeyword={handleOnChangeKeyword} />
         </ButtonGroup>
     );
 };
