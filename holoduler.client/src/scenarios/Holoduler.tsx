@@ -1,6 +1,6 @@
 import { memo, useEffect, FC, useState } from "react";
 import { Box, Flex, IconButton, Wrap, WrapItem } from "@chakra-ui/react";
-import { CloseIcon, TriangleUpIcon } from '@chakra-ui/icons';
+import { CloseIcon, TriangleUpIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 import { Header } from "../components/organisms/Header";
 import { Sidebar } from "../components/organisms/Sidebar";
 import { useSchedules } from "../hooks/useSchedules";
@@ -28,6 +28,12 @@ export const Holoduler: FC = memo(() => {
             }
             return [...items, item];
         });
+    };
+
+    // 動画を新しいウィンドウで開く
+    const openVideoInNewWindow = (videoId: string) => {
+        const url = `https://www.youtube.com/watch?v=${videoId}&t=0s&autoplay=1&vq=hd1080&rel=0&showinfo=0&modestbranding=1&fs=1&iv_load_policy=3&cc_load_policy=1&disablekb=1&playsinline=1&enablejsapi=1&widgetid=1&theater=1`;
+        window.open(url, '_blank', 'noopener,noreferrer');
     };
 
     // インデックスで指定したアイテムをリストから削除
@@ -76,24 +82,28 @@ export const Holoduler: FC = memo(() => {
                                         justifyContent="center"
                                     >
                                         <YoutubePlayer videoId={item.video_id} playing={allPlaying} muted={!allUnmuted} />
-                                        <IconButton
-                                            icon={<TriangleUpIcon />}
-                                            position="absolute"
-                                            top="2px"
-                                            left="2px"
-                                            onClick={() => setSelectedItem(item)}
-                                            aria-label="Select"
-                                            size="sm"
-                                        />
-                                        <IconButton
-                                            icon={<CloseIcon />}
-                                            position="absolute"
-                                            top="2px"
-                                            right="2px"
-                                            onClick={() => handleItemRemove(index)}
-                                            aria-label="Close"
-                                            size="sm"
-                                        />
+                                        <Box position="absolute" top="2px" left="2px" display="flex" gap="4px">
+                                            <IconButton
+                                                icon={<TriangleUpIcon />}
+                                                onClick={() => setSelectedItem(item)}
+                                                aria-label="Select"
+                                                size="sm"
+                                            />
+                                            <IconButton
+                                                icon={<ExternalLinkIcon />}
+                                                onClick={() => openVideoInNewWindow(item.video_id)}
+                                                aria-label="Open"
+                                                size="sm"
+                                            />
+                                        </Box>
+                                        <Box position="absolute" top="2px" right="2px">
+                                            <IconButton
+                                                icon={<CloseIcon />}
+                                                onClick={() => handleItemRemove(index)}
+                                                aria-label="Close"
+                                                size="sm"
+                                            />
+                                        </Box>
                                     </Box>
                                 </WrapItem>
                             ))}
