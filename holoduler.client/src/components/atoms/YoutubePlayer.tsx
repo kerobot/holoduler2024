@@ -1,5 +1,6 @@
 import { FC, useState, useEffect, useCallback, useRef } from "react";
 import ReactPlayer from 'react-player/youtube'
+//import { FrameRateCalculator } from "../../utils/FrameRateCalculator";
 
 type YoutubePlayerProps = {
     videoId: string;
@@ -50,16 +51,34 @@ export const YoutubePlayer: FC<YoutubePlayerProps> = (props) => {
         calculateVideoHeight();
     }
 
+    //const [frameRate, setFrameRate] = useState<number>(0);
+    //const frameRateCalculator = new FrameRateCalculator();
+
+    //useEffect(() => {
+    //    frameRateCalculator.start();
+    //    const intervalId = setInterval(() => { setFrameRate(frameRateCalculator.getFrameRate()); }, 1000);
+    //    return () => { clearInterval(intervalId); };
+    //// eslint-disable-next-line react-hooks/exhaustive-deps
+    //}, []);
+
+    //const seekToPosition = (milliseconds: number) => {
+    //    if (playerRef.current) {
+    //        playerRef.current.seekTo(milliseconds / 1000, 'seconds');
+    //    }
+    //};
+
     return (
-        <ReactPlayer
-            ref={playerRef}
-            onReady={onReady}
-            width="100%"
-            height={`${videoHeight}px`}
-            url={videoSrc}
-            playing={playing}
-            muted={muted}
-            controls
-        />
+        <div className="yt-ctrl">
+            <ReactPlayer
+                ref={playerRef}
+                onReady={onReady}
+                width="100%"
+                height={`${videoHeight}px`}
+                url={videoSrc}
+                playing={playing}
+                muted={muted}
+                controls
+            />
+        </div>
     );
 };
