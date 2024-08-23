@@ -32,8 +32,8 @@ export const Holoduler: FC = memo(() => {
 
     // 動画を新しいウィンドウで開く
     const openVideoInNewWindow = (videoId: string) => {
-        const url = `https://www.youtube.com/watch?v=${videoId}&t=0s&autoplay=1&vq=hd1080&rel=0&showinfo=0&modestbranding=1&fs=1&iv_load_policy=3&cc_load_policy=1&disablekb=1&playsinline=1&enablejsapi=1&widgetid=1&theater=1`;
-        window.open(url, '_blank', 'noopener,noreferrer');
+        const url = `https://www.youtube.com/embed/${videoId}?rel=0&autoplay=1`;
+        window.open(url, undefined, 'width=1280,height=720');
     };
 
     // インデックスで指定したアイテムをリストから削除
