@@ -9,7 +9,7 @@ type MiddleAreaProps = {
     onAllPlaying: (isToggled: boolean) => void;
 };
 
-// 中段エリアコンポーネント
+// 中段コンポーネント
 export const MiddleArea: FC<MiddleAreaProps> = (props) => {
     const { allUnmuted, allPlaying, onAllUnmuted, onAllPlaying } = props;
 

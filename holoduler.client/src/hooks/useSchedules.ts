@@ -30,9 +30,9 @@ export const useSchedules = () => {
     return { getSchedules, loading, schedules };
 };
 
+// streaming_at か published_at は Date に変換
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function dateParseChallenge(key: string, val: any) {
-    // streaming_at か published_at は Date に変換
     if (key === "streaming_at" || key === "published_at") {
         const time = Date.parse(val);
         if (!Number.isNaN(time)) {
@@ -42,6 +42,7 @@ function dateParseChallenge(key: string, val: any) {
     return val;
 }
 
+// axios のレスポンスを解析する際に日付型に変換する
 const axiosClient = axios.create({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     transformResponse: (data: any) => {

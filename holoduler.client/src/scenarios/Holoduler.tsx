@@ -1,14 +1,12 @@
 import { memo, useEffect, FC, useState } from "react";
-import { Box, Flex, IconButton, Wrap, WrapItem } from "@chakra-ui/react";
-import { CloseIcon, TriangleUpIcon, ExternalLinkIcon } from '@chakra-ui/icons';
+import { Box, Flex, Wrap, WrapItem } from "@chakra-ui/react";
 import { Header } from "../components/organisms/Header";
 import { Sidebar } from "../components/organisms/Sidebar";
 import { useSchedules } from "../hooks/useSchedules";
 import { Schedule } from "../types/api/schedule";
-import { YoutubePlayer } from "../components/atoms/YoutubePlayer";
 import { TopArea } from "../components/organisms/TopArea";
 import { MiddleArea } from "../components/organisms/MiddleArea";
-/*import { YoutubePlayerEx } from "../components/atoms/YoutubePlayerEx";*/
+import { YoutubeItem } from "../components/molecules/YoutubeItem";
 
 // 配信予定ページコンポーネント
 export const Holoduler: FC = memo(() => {
@@ -17,7 +15,6 @@ export const Holoduler: FC = memo(() => {
     const [selectedItem, setSelectedItem] = useState<Schedule | null>(null);
     const [allUnmuted, setAllUnmuted] = useState(false);
     const [allPlaying, setAllPlaying] = useState(false);
-
     const { getSchedules, loading, schedules } = useSchedules();
 
     // 選択したアイテムをリストに追加（リストに存在しない場合にスプレッド構文を利用してアイテムを追加）
@@ -28,12 +25,6 @@ export const Holoduler: FC = memo(() => {
             }
             return [...items, item];
         });
-    };
-
-    // 動画を新しいウィンドウで開く
-    const openVideoInNewWindow = (videoId: string) => {
-        const url = `https://www.youtube.com/embed/${videoId}?rel=0&autoplay=1`;
-        window.open(url, undefined, 'width=1280,height=720');
     };
 
     // インデックスで指定したアイテムをリストから削除
@@ -53,58 +44,42 @@ export const Holoduler: FC = memo(() => {
 
     return (
         <Flex direction="column" height="100vh">
-            {/* Header */}
+            {/* ヘッダー（配信の検索） */}
             <Header onSearchSchedule={handleSearch} />
             <Flex flex="1" overflow="hidden">
-                {/* Sidebar */}
-                <Sidebar loading={loading} schedules={searchResults} onScheduleSelected={handleItemSelected} />
+                {/* サイドバー（配信の一覧表示） */}
+                <Sidebar
+                    loading={loading}
+                    schedules={searchResults}
+                    onScheduleSelected={handleItemSelected} />
                 <Flex direction="column" flex="1">
-                    {/* Top */ }
+                    {/* 上段（ピックアップ動画表示） */ }
                     {selectedItem && (
-                        <TopArea title={selectedItem.title} video_id={selectedItem.video_id} playing={true} muted={false} />
+                        <TopArea
+                            schedule={selectedItem}
+                            playing={true}
+                            muted={false} />
                     )}
-                    {/* Middle */}
+                    {/* 中段（再生と音声の制御） */}
                     {selectedItems.length > 0 && (
-                        <MiddleArea allUnmuted={allUnmuted} allPlaying={allPlaying} onAllUnmuted={setAllUnmuted} onAllPlaying={setAllPlaying} />
+                        <MiddleArea
+                            allUnmuted={allUnmuted}
+                            allPlaying={allPlaying}
+                            onAllUnmuted={setAllUnmuted}
+                            onAllPlaying={setAllPlaying} />
                     )}
-                    {/* Bottom */}
+                    {/* 下段（動画の一覧表示） */}
                     <Box flex="1" overflowY="auto">
                         <Wrap spacing="2">
                             {selectedItems.map((item, index) => (
                                 <WrapItem key={index}>
-                                    <Box
-                                        bg="gray.200"
-                                        width="320px"
-                                        height="180px"
-                                        position="relative"
-                                        display="flex"
-                                        alignItems="center"
-                                        justifyContent="center"
-                                    >
-                                        <YoutubePlayer videoId={item.video_id} playing={allPlaying} muted={!allUnmuted} />
-                                        <Box position="absolute" top="2px" left="2px" display="flex" gap="4px">
-                                            <IconButton
-                                                icon={<TriangleUpIcon />}
-                                                onClick={() => setSelectedItem(item)}
-                                                aria-label="Select"
-                                                size="sm"
-                                            />
-                                            <IconButton
-                                                icon={<ExternalLinkIcon />}
-                                                onClick={() => openVideoInNewWindow(item.video_id)}
-                                                aria-label="Open"
-                                                size="sm"
-                                            />
-                                        </Box>
-                                        <Box position="absolute" top="2px" right="2px">
-                                            <IconButton
-                                                icon={<CloseIcon />}
-                                                onClick={() => handleItemRemove(index)}
-                                                aria-label="Close"
-                                                size="sm"
-                                            />
-                                        </Box>
-                                    </Box>
+                                    {/* 動画表示 */}
+                                    <YoutubeItem
+                                        schedule={item}
+                                        playing={allPlaying}
+                                        muted={!allUnmuted}
+                                        onSelectItem={() => setSelectedItem(item)}
+                                        onRemoveItem={() => handleItemRemove(index)} />
                                 </WrapItem>
                             ))}
                         </Wrap>
