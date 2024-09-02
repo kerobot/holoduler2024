@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import axios from "axios";
 
+import { DateHelper } from "../utils/DateHelper";
 import { Schedules } from "../types/api/schedules";
 import { useMessage } from "./useMessage";
 
@@ -11,8 +12,10 @@ export const useSchedules = () => {
     const [loading, setLoading] = useState(false);
     const [schedules, setSchedules] = useState<Schedules>();
 
-    const getSchedules = useCallback((sdate: string, edate: string, group: string, keyword: string) => {
-        const url = `/api/holodule?sdate=${sdate}&edate=${edate}&group=${group}&keyword=${keyword}`;
+    const getSchedules = useCallback((sdate: Date, edate: Date, group: string, keyword: string) => {
+        const sdateString = DateHelper.formatDate(sdate, "-");
+        const edateString = DateHelper.formatDate(edate, "-");
+        const url = `/api/holodule?sdate=${sdateString}&edate=${edateString}&group=${group}&keyword=${keyword}`;
         setLoading(true);
         axiosClient
             .get<Schedules>(url)
@@ -27,9 +30,9 @@ export const useSchedules = () => {
     return { getSchedules, loading, schedules };
 };
 
+// streaming_at か published_at は Date に変換
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function dateParseChallenge(key: string, val: any) {
-    // streaming_at か published_at は Date に変換
     if (key === "streaming_at" || key === "published_at") {
         const time = Date.parse(val);
         if (!Number.isNaN(time)) {
@@ -39,6 +42,7 @@ function dateParseChallenge(key: string, val: any) {
     return val;
 }
 
+// axios のレスポンスを解析する際に日付型に変換する
 const axiosClient = axios.create({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     transformResponse: (data: any) => {

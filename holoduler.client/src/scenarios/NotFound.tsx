@@ -1,6 +1,6 @@
-import { memo, FC } from "react";
+import { FC } from "react";
 
 // 404ページコンポーネント
-export const Page404: FC = memo(() => {
+export const NotFound: FC = () => {
     return <p>ページが存在しません</p>;
-});
+};

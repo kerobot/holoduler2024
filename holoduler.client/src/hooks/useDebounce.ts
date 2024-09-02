@@ -5,6 +5,7 @@ type Props = {
     delay?: number;
 };
 
+// デバウンスした値を返すカスタムフック
 export const useDebouncedValue = ({ value, delay = 1000 }: Props) => {
     const [debouncedValue, setDebouncedValue] = useState(value ?? "");
 

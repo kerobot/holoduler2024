@@ -1,45 +1,44 @@
-import { FC, memo } from "react";
+import { FC, useEffect, useState } from "react";
 import { ButtonGroup, Center } from "@chakra-ui/react";
 
-import { PrevButton } from "../atoms/PrevButton";
-import { NextButton } from "../atoms/NextButton";
-import { StreamDate } from "../atoms/StreamDate";
-import { SearchBox } from "../atoms/SearchBox";
+import { DateSelect } from "../atoms/DateSelect";
 import { GroupSelect } from "../atoms/GroupSelect";
+import { SearchBox } from "../atoms/SearchBox";
 
 type SearchControlProps = {
-    date: Date;
-    days: number;
-    group: string;
-    keyword: string;
-    onClickPrev: () => void;
-    onClickNext: () => void;
-    onChangeDays: (days: number) => void
-    onChangeGroup: (group: string) => void;
-    onChangeKeyword: (value: string) => void;
+    onSearchSchedule: (date: Date, group: string, keyword: string) => void
 };
 
-// 日付移動と日付表示と検索を行うコンポーネント
-export const SearchControl: FC<SearchControlProps> = memo((props) => {
-    const {
-        date,
-        days,
-        group,
-        keyword,
-        onClickPrev,
-        onClickNext,
-        onChangeDays,
-        onChangeGroup,
-        onChangeKeyword
-    } = props;
+// 検索指定コンポーネント
+export const SearchControl: FC<SearchControlProps> = (props) => {
+    const { onSearchSchedule } = props;
 
+    const [searchDate, setSearchDate] = useState(new Date());
+    const [searchGroup, setSearchGroup] = useState('all'); 
+    const [searchKeyword, setSearchKeyword] = useState('');
+
+    useEffect(() => {
+        onSearchSchedule(searchDate, searchGroup, searchKeyword);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchDate, searchGroup, searchKeyword]);
+
+    const handleOnChangeDate = (date: Date) => {
+        setSearchDate(date);
+    };
+
+    const handleOnChangeGroup = (group: string) => {
+        setSearchGroup(group);
+    }
+
+    const handleOnChangeKeyword = (keyword: string) => {
+        setSearchKeyword(keyword);
+    }
+    
     return (
         <ButtonGroup gap='2'>
-            <GroupSelect group={group} onChangeGroup={onChangeGroup} />
-            <SearchBox keyword={keyword} onChangeKeyword={onChangeKeyword} />
-            <PrevButton onClick={onClickPrev} />
-            <Center><StreamDate date={date} days={days} onChangeDays={onChangeDays} /></Center>
-            <NextButton onClick={onClickNext} />
+            <Center><DateSelect date={searchDate} onChangeDate={handleOnChangeDate} /></Center>
+            <GroupSelect group={searchGroup} onChangeGroup={handleOnChangeGroup} />
+            <SearchBox placeholder="タイトルまたは概要欄" keyword={searchKeyword} width={"200%"} onChangeKeyword={handleOnChangeKeyword} />
         </ButtonGroup>
     );
-});
+};

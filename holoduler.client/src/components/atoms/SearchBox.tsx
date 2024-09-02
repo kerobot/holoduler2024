@@ -3,23 +3,25 @@ import { Input } from '@chakra-ui/react'
 import { useDebouncedValue } from "../../hooks/useDebounce";
 
 type SearchBoxProps = {
+    placeholder: string;
     keyword?: string;
+    width?: string;
     onChangeKeyword: (value: string) => void;
 };
 
-// ƒL[ƒ[ƒhŒŸõƒRƒ“ƒ|[ƒlƒ“ƒg
+// ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰æ¤œç´¢ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
 export const SearchBox: FC<SearchBoxProps> = memo((props) => {
-    const { keyword = '', onChangeKeyword } = props;
+    const { placeholder, keyword = '', width = 'auto', onChangeKeyword } = props;
     const [inputKeyword, setInputKeyword] = useState(keyword);
     const debouncedValue = useDebouncedValue({ value: inputKeyword, delay: 1000 });
 
     useEffect(() => {
         onChangeKeyword(debouncedValue);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [debouncedValue, inputKeyword]);
+    }, [debouncedValue]);
 
     return (
-        <Input maxW='200px' placeholder='keyword' value={inputKeyword} onChange={
+        <Input placeholder={placeholder} width={width} value={inputKeyword} onChange={
             (e) => setInputKeyword(e.target.value)
         } />
     );

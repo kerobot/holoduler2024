@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC } from "react";
 import { Select } from "@chakra-ui/react";
 
 type GroupSelectProps = {
@@ -6,10 +6,9 @@ type GroupSelectProps = {
     onChangeGroup: (group: string) => void;
 };
 
-// ƒOƒ‹[ƒv‘I‘ğƒRƒ“ƒ|[ƒlƒ“ƒg
-export const GroupSelect: FC<GroupSelectProps> = memo((props) => {
+// ã‚°ãƒ«ãƒ¼ãƒ—é¸æŠã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
+export const GroupSelect: FC<GroupSelectProps> = (props) => {
     const { group = 'all', onChangeGroup } = props;
-
     const options = [
         { value: 'all', label: 'ALL' },
         { value: 'hololive', label: 'JP' },
@@ -19,10 +18,10 @@ export const GroupSelect: FC<GroupSelectProps> = memo((props) => {
     ];
 
     return (
-        <Select maxW='100px' value={group} onChange={(e) => onChangeGroup(e.target.value)} >
+        <Select value={group} onChange={(e) => onChangeGroup(e.target.value)} >
             {options.map((option) => (
                 <option key={option.value} value={option.value}>{option.label}</option>
             ))}
         </Select>
     );
-});
+};
