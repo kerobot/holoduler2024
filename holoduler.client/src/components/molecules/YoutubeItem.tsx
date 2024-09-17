@@ -25,8 +25,8 @@ export const YoutubeItem: FC<YoutubeItemProps> = (props) => {
     return (
         <Box
             bg="gray.200"
-            width="320px"
-            height="180px"
+            width="426px"
+            height="240px"
             position="relative"
             display="flex"
             alignItems="center"
