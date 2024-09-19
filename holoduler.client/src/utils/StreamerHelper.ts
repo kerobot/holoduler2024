@@ -13,7 +13,7 @@ export class StreamerHelper {
 
     // サムネイルURL（HD画質固定）
     static getThumbnailUrl(video_id: string): string {
-        return `http://img.youtube.com/vi/${video_id}/mqdefault.jpg`;
+        return `https://img.youtube.com/vi/${video_id}/mqdefault.jpg`;
     }
 
     // 配信者定義
