@@ -74,6 +74,12 @@ export class StreamerHelper {
         "HLDI04": { name: "一条莉々華", img: "ichijou_ririka.jpg", ch: "@IchijouRirika" },
         "HLDI05": { name: "轟はじめ", img: "todoroki_hajime.jpg", ch: "@TodorokiHajime" },
 
+        "HLDI06": { name: "響咲リオナ", img: "isaki_riona.jpg", ch: "@IsakiRiona" },
+        "HLDI07": { name: "輪堂千速", img: "rindo_chihaya.jpg", ch: "@RindoChihaya" },
+        "HLDI08": { name: "虎金妃笑虎", img: "koganei_niko.jpg", ch: "@KoganeiNiko" },
+        "HLDI09": { name: "水宮枢", img: "mizumiya_su.jpg", ch: "@MizumiyaSu" },
+        "HLDI10": { name: "綺々羅々ヴィヴィ", img: "kikirara_vivi.jpg", ch: "@KikiraraVivi" },
+
         "HLID00": { name: "hololive Indonesia", img: "hololive_id.jpg", ch: "@hololiveIndonesia" },
 
         "HLID01": { name: "Ayunda Risu", img: "ayunda_risu.jpg", ch: "@AyundaRisu" },
