@@ -5,11 +5,14 @@ import plugin from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
 import child_process from 'child_process';
+import mkcert from 'vite-plugin-mkcert'
 
 const baseFolder =
     process.env.APPDATA !== undefined && process.env.APPDATA !== ''
         ? `${process.env.APPDATA}/ASP.NET/https`
         : `${process.env.HOME}/.aspnet/https`;
+
+fs.mkdirSync(baseFolder, { recursive: true });
 
 const certificateArg = process.argv.map(arg => arg.match(/--name=(?<value>.+)/i)).filter(Boolean)[0];
 const certificateName = certificateArg && certificateArg.groups ? certificateArg.groups.value : "holoduler.client";
@@ -38,7 +41,7 @@ if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [plugin()],
+    plugins: [plugin(), mkcert()],
     resolve: {
         alias: {
             '@': fileURLToPath(new URL('./src', import.meta.url))
