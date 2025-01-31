@@ -1,4 +1,5 @@
 using holoduler.Server.Services;
+using RestSharp;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,10 +10,27 @@ var endpoint = Environment.GetEnvironmentVariable("API_ENDPOINT")!;
 
 // サービスコンテナへ登録
 builder.Services.AddTransient<IDataService>(_ => new DataService(userName, password, endpoint));
+
+// RestClient を登録して BaseUrl を設定
+builder.Services.AddSingleton<IRestClient>(provider =>
+{
+    var dataService = provider.GetRequiredService<IDataService>();
+    var client = new RestClient(new RestClientOptions
+    {
+        BaseUrl = new Uri(dataService.Endpoint)
+    });
+    return client;
+});
+
+// IHoloduleService を登録
+builder.Services.AddScoped<IHoloduleService, HoloduleService>();
+
 // コントローラーを使用
 builder.Services.AddControllers();
+
 // Swaggerを生成
 builder.Services.AddSwaggerGen();
+
 // CORS を追加
 builder.Services.AddCors(options =>
 {

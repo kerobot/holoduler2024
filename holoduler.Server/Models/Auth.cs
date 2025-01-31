@@ -6,18 +6,12 @@ namespace holoduler.Server.Models
     /// Web API に渡す認証情報を保持するクラス
     /// </summary>
     [JsonObject]
-    public class Auth
+    public class Auth(string username, string password)
     {
         [JsonProperty("username")]
-        public string Username { get; private set; }
+        public string Username { get; private set; } = username;
 
         [JsonProperty("password")]
-        public string Password { get; private set; }
-
-        public Auth(string username, string password)
-        {
-            Username = username;
-            Password = password;
-        }
+        public string Password { get; private set; } = password;
     }
 }

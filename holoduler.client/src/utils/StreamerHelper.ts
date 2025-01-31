@@ -20,7 +20,7 @@ export class StreamerHelper {
     static members: { [key: string]: Member } = {
         "HL0000": { name: "ホロライブ", img: "hololive.jpg", ch: "@hololive" },
 
-        "HL0001": { name: "ときのそら", img: "tokino_sora.jpg", ch: "@TokinoSora"},
+        "HL0001": { name: "ときのそら", img: "tokino_sora.jpg", ch: "@TokinoSora" },
         "HL0002": { name: "ロボ子さん", img: "robokosan.jpg", ch: "@Robocosan" },
         "HL0003": { name: "さくらみこ", img: "sakura_miko.jpg", ch: "@SakuraMiko" },
         "HL0004": { name: "星街すいせい", img: "hoshimachi_suisei.jpg", ch: "@HoshimachiSuisei" },
@@ -70,8 +70,8 @@ export class StreamerHelper {
 
         "HLDI01": { name: "火威青", img: "hiodoshi_ao.jpg", ch: "@HiodoshiAo" },
         "HLDI02": { name: "儒烏風亭らでん", img: "juufuutei_raden.jpg", ch: "@JuufuuteiRaden" },
-        "HLDI03": { name: "音乃瀬奏", img: "otonose_kanade.jpg", ch: "@OtonoseKanade" },
-        "HLDI04": { name: "一条莉々華", img: "ichijou_ririka.jpg", ch: "@IchijouRirika" },
+        "HLDI03": { name: "一条莉々華", img: "ichijou_ririka.jpg", ch: "@IchijouRirika" },
+        "HLDI04": { name: "音乃瀬奏", img: "otonose_kanade.jpg", ch: "@OtonoseKanade" },
         "HLDI05": { name: "轟はじめ", img: "todoroki_hajime.jpg", ch: "@TodorokiHajime" },
 
         "HLDI06": { name: "響咲リオナ", img: "isaki_riona.jpg", ch: "@IsakiRiona" },
